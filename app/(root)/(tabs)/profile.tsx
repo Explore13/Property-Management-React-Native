@@ -1,3 +1,4 @@
+import { useUserStore } from "@/store/userStore";
 import { useAuth } from "@clerk/expo";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -7,6 +8,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Profile() {
   const { signOut } = useAuth();
   const router = useRouter();
+
+  const isAdmin = useUserStore((state) => state.isAdmin);
 
   const handleSignOut = async () => {
     try {
@@ -20,6 +23,7 @@ export default function Profile() {
   return (
     <SafeAreaView>
       <Text>Profile</Text>
+      <Text>Admin Status: {isAdmin ? "Admin" : "User"}</Text>
       <TouchableOpacity onPress={handleSignOut}>
         <Text>Logout</Text>
       </TouchableOpacity>
