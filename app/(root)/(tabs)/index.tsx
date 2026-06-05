@@ -1,3 +1,5 @@
+import FeaturedCard from "@/components/FeaturedCard";
+import PropertyCard from "@/components/PropertyCard";
 import { IProperty } from "@/types";
 import { supabase } from "@/utils/supabase";
 import { useUser } from "@clerk/expo";
@@ -67,7 +69,7 @@ export default function HomeScreen() {
         ListHeaderComponent={
           <View>
             {/* Header */}
-            <View className="flex-row items-center justify-between px-5 pt-4 pb-5">
+            <View className="flex-row items-end justify-between px-5 pt-4 pb-5">
               <Image
                 source={require("../../../assets/images/logo.png")}
                 style={{ width: 90, height: 65 }}
@@ -124,13 +126,10 @@ export default function HomeScreen() {
                 <FlatList
                   data={featured}
                   keyExtractor={(item) => item.id}
-                  renderItem={({ item }) => (
-                    <View className="px-5">
-                      <Text>{item.title}</Text>
-                    </View>
-                  )}
+                  renderItem={({ item }) => <FeaturedCard property={item} />}
                   horizontal
-                  
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={{ paddingHorizontal: 20 }}
                 />
               )}
             </View>
@@ -143,7 +142,7 @@ export default function HomeScreen() {
         }
         renderItem={({ item }) => (
           <View className="px-5">
-            <Text>{item.title}</Text>
+            <PropertyCard property={item} />
           </View>
         )}
         ListEmptyComponent={
