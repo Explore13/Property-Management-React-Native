@@ -30,29 +30,35 @@ export default function HomeScreen() {
   const fetchProperties = async () => {
     try {
       setLoading(true);
+      setError(null);
 
-      const { data: featuredData } = await supabase
+      const { data: featuredData, error: featuredError } = await supabase
         .from("properties")
         .select("*")
         .eq("is_featured", true)
         .order("created_at", { ascending: false });
 
-      const { data: recommendedData } = await supabase
+      if (featuredError) throw featuredError;
+
+      const { data: recommendedData, error: recommendedError } = await supabase
         .from("properties")
         .select("*")
         .eq("is_featured", false)
         .order("created_at", { ascending: false });
+
+      if (recommendedError) throw recommendedError;
 
       setFeatured(featuredData ?? []);
       setRecommended(recommendedData ?? []);
     } catch (error) {
       console.error("Error fetching properties: ", error);
       setError("Failed to fetch properties");
+      setFeatured([]);
+      setRecommended([]);
     } finally {
       setLoading(false);
     }
   };
-
   useFocusEffect(
     useCallback(() => {
       fetchProperties();
