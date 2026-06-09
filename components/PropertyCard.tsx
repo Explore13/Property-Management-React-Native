@@ -35,7 +35,7 @@ const PropertyCard = ({
         source={
           property.images.length > 0
             ? { uri: property.images[0] }
-            : require("../../../assets/images/logo.png")
+            : require("../assets/images/logo.png")
         }
         className="w-28 h-28"
         resizeMode="cover"
