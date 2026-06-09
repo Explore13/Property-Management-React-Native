@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.propspot"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +29,12 @@
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow PropSpot to access your location to tag property coordinates."
+        }
+      ],
       [
         "expo-splash-screen",
         {

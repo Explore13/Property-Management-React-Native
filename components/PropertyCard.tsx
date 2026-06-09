@@ -1,21 +1,22 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import { useSavedProperty } from "@/hooks/useSavedProperties";
 import { IProperty } from "@/types";
-import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 import { formatPrice } from "@/utils/utils";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 const PropertyCard = ({
   property,
   onUnsave,
-  showSave = false,
+  showSave = true,
 }: {
   property: IProperty;
   onUnsave?: () => void;
   showSave?: boolean;
 }) => {
   const router = useRouter();
-  const isSaved = true;
+  const { isSaved, toggleSave, saveLoading } = useSavedProperty(property?.id ?? "", onUnsave)
   return (
     <TouchableOpacity
       onPress={() => router.push(`/(root)/property/${property.id}`)}
@@ -81,8 +82,8 @@ const PropertyCard = ({
       {/* Save Button */}
       {showSave && (
         <TouchableOpacity
-          //   onPress={toggleSave}
-          //   disabled={saveLoading}
+          onPress={toggleSave}
+          disabled={saveLoading}
           className="w-10 items-center pt-3"
         >
           <Ionicons
